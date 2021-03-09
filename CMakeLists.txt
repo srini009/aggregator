@@ -52,6 +52,7 @@ set (AGGREGATOR_VERSION
      "${AGGREGATOR_VERSION_MAJOR}.${AGGREGATOR_VERSION_MINOR}.${AGGREGATOR_VERSION_PATCH}")
 
 add_subdirectory (src)
+add_subdirectory (bin)
 if(${ENABLE_TESTS})
   add_subdirectory (tests)
 endif(${ENABLE_TESTS})
