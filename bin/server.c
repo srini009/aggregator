@@ -40,14 +40,14 @@ int main(int argc, char** argv)
 
     // Exchange addresses
     char * addresses_buf = (char*)malloc(1024*size);
-    MPI_Gather(addr, 1024, MPI_BYTE, addresses_buf, 1024*size, MPI_BYTE, 0, MPI_COMM_WORLD);
+    MPI_Gather(addr, addr_str_size, MPI_BYTE, addresses_buf, 1024*size, MPI_BYTE, 0, MPI_COMM_WORLD);
  
     fprintf(stderr, "Server running at address %s, with provider id 42\n", addr);
     margo_addr_free(mid, my_address);
-    //if(!rank) {
+    if(!rank) {
            //fprintf(stderr, "Server running at address %s, with provider id 42", addr_str);
-           fprintf(stderr, "%s", addresses_buf);
-    //}
+         fprintf(stderr, "%s", addresses_buf);
+    }
 
     struct aggregator_provider_args args = AGGREGATOR_PROVIDER_ARGS_INIT;
 
