@@ -25,11 +25,27 @@ int main(int argc, char** argv)
 
     hg_addr_t my_address;
     margo_addr_self(mid, &my_address);
-    char addr_str[128];
-    size_t addr_str_size = 128;
-    margo_addr_to_string(mid, addr_str, &addr_str_size, my_address);
+    char addr[1024];
+    size_t addr_str_size = 1024;
+    margo_addr_to_string(mid, addr, &addr_str_size, my_address);
+
+    int rank, size;
+
+    MPI_Comm_rank(MPI_COMM_WORLD, &rank);
+    MPI_Comm_size(MPI_COMM_WORLD, &size);
+
+    unsigned j=0;
+    while(addr[j] != '\0' && addr[j] != ':' && addr[j] != ';') j++;
+    std::string proto(addr, j);
+
+    // Exchange addresses
+    std::vector<char> addresses_buf(1024*size);
+    MPI_Gather(addr, 1024, MPI_BYTE, addresses_buf.data(), 1024, MPI_BYTE, 0, MPI_COMM_WORLD);
     margo_addr_free(mid, my_address);
-    fprintf(stderr, "Server running at address %s, with provider id 42", addr_str);
+    if(!rank) {
+           //fprintf(stderr, "Server running at address %s, with provider id 42", addr_str);
+           fprintf(stderr, "%s", addresses_buf.c_str());
+    }
 
     struct aggregator_provider_args args = AGGREGATOR_PROVIDER_ARGS_INIT;
 
