@@ -1,5 +1,5 @@
-add_executable (aggregator-server ${CMAKE_CURRENT_SOURCE_DIR}/server.c)
-target_link_libraries (aggregator-server aggregator-client aggregator-server)
+add_executable (aggregator-mpi-server ${CMAKE_CURRENT_SOURCE_DIR}/server.c)
+target_link_libraries (aggregator-mpi-server aggregator-client aggregator-server)
 install (TARGETS aggregator-server DESTINATION "bin")
 
 #add_executable (example-admin ${CMAKE_CURRENT_SOURCE_DIR}/admin.c)
