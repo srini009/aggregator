@@ -36,15 +36,15 @@ int main(int argc, char** argv)
 
     unsigned j=0;
     while(addr[j] != '\0' && addr[j] != ':' && addr[j] != ';') j++;
-    std::string proto(addr, j);
+    char * proto = addr + j;
 
     // Exchange addresses
-    std::vector<char> addresses_buf(1024*size);
-    MPI_Gather(addr, 1024, MPI_BYTE, addresses_buf.data(), 1024, MPI_BYTE, 0, MPI_COMM_WORLD);
+    char * addresses_buf = (char*)malloc(1024*size);
+    MPI_Gather(addr, 1024, MPI_BYTE, addresses_buf, 1024, MPI_BYTE, 0, MPI_COMM_WORLD);
     margo_addr_free(mid, my_address);
     if(!rank) {
            //fprintf(stderr, "Server running at address %s, with provider id 42", addr_str);
-           fprintf(stderr, "%s", addresses_buf.c_str());
+           fprintf(stderr, "%s", addresses_buf);
     }
 
     struct aggregator_provider_args args = AGGREGATOR_PROVIDER_ARGS_INIT;
