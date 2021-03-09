@@ -31,6 +31,8 @@ int main(int argc, char** argv)
 
     int rank, size;
 
+    FILE *fp = fopen("test.txt", "w");
+
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
     MPI_Comm_size(MPI_COMM_WORLD, &size);
 
@@ -44,13 +46,13 @@ int main(int argc, char** argv)
     if(ret == MPI_SUCCESS) 
         fprintf(stderr, "MPI returned successfully\n");
  
-    fprintf(stderr, "Server running at address %s, with provider id 42\n", addr);
     margo_addr_free(mid, my_address);
     if(!rank) {
            //fprintf(stderr, "Server running at address %s, with provider id 42", addr_str);
-         fprintf(stderr, "%s", addresses_buf);
+         fprintf(fp, "%s\n", addresses_buf);
     }
 
+    fclose(fp);
     struct aggregator_provider_args args = AGGREGATOR_PROVIDER_ARGS_INIT;
 
     aggregator_provider_t provider;
