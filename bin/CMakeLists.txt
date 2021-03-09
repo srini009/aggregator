@@ -1,4 +1,4 @@
-add_executable (aggregator-mpi-server ${CMAKE_CURRENT_SOURCE_DIR}/server.c)
+add_executable (aggregator-mpi-server ${CMAKE_CURRENT_SOURCE_DIR}/server.cpp)
 target_link_libraries (aggregator-mpi-server aggregator-client aggregator-server)
 install (TARGETS aggregator-mpi-server DESTINATION "bin")
 
