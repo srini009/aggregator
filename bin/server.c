@@ -44,10 +44,10 @@ int main(int argc, char** argv)
  
     fprintf(stderr, "Server running at address %s, with provider id 42\n", addr);
     margo_addr_free(mid, my_address);
-    if(!rank) {
+    //if(!rank) {
            //fprintf(stderr, "Server running at address %s, with provider id 42", addr_str);
            fprintf(stderr, "%s", addresses_buf);
-    }
+    //}
 
     struct aggregator_provider_args args = AGGREGATOR_PROVIDER_ARGS_INIT;
 
