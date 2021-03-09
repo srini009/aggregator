@@ -40,7 +40,9 @@ int main(int argc, char** argv)
 
     // Exchange addresses
     char * addresses_buf = (char*)malloc(1024*size);
-    MPI_Gather(addr, addr_str_size, MPI_BYTE, addresses_buf, 1024*size, MPI_BYTE, 0, MPI_COMM_WORLD);
+    int ret = MPI_Gather(addr, addr_str_size, MPI_BYTE, addresses_buf, 1024, MPI_BYTE, 0, MPI_COMM_WORLD);
+    if(ret == MPI_SUCCESS) 
+        fprintf(stderr, "MPI returned successfully\n");
  
     fprintf(stderr, "Server running at address %s, with provider id 42\n", addr);
     margo_addr_free(mid, my_address);
